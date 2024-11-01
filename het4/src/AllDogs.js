@@ -3,7 +3,6 @@ import DogCard from './DogCard';
 import AddDogCard from './AddDogCard';
 import { Container, Grid, Typography } from '@mui/material';
 import {useDogContext} from './utils/data';
-// import { useEffect } from 'react';
 
 function AllDogs() {
   const navigate = useNavigate();
@@ -16,11 +15,6 @@ function AllDogs() {
   const onDeleteDog = (id) => {
     deleteDog(id);
   }
-
-
-  // useEffect(() => {
-  //   console.log('dogs', dogs);
-  // }, [dogs]);
   
   return <Container maxWidth={'lg'}>
   <Grid container spacing={2}>

@@ -43,36 +43,3 @@ export const DogProvider = ({ children }) => {
 };
 
 export const useDogContext = () => useContext(DogContext);
-
-// import { useState } from "react";
-
-// function dogList() {
-//   const getDogById = (id) => {
-//     return dogs.find(dog => dog.id === id);
-//   }
-
-//   const addDog = (dog) => {
-//     setDogs([...dogs, dog]);
-//   }
-
-//   const deleteDog = (id) => {
-//     setDogs(dogs => {
-//       return dogs.filter(dog => dog.id !== id)
-//     })
-//   }
-
-//   return [dogs, getDogById, setDogs, addDog, deleteDog];
-// }
-
-// export default dogList;
-
-// import { createContext } from "react";
-
-// export const DataContext = createContext();
-// DataContext.displayName = 'All dogs';
-
-// const updateDog = (updatedDog) => {
-//     setDogs((prevDogs) =>
-//       prevDogs.map((dog) => (dog.id === updatedDog.id ? updatedDog : dog))
-//     );
-// };
