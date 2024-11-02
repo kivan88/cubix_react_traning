@@ -1,8 +1,8 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import AllDogs from './AllDogs';
-import OneDog from './OneDog';
-import NewDog from './NewDog';
-import Page404 from './Page404';
+import AllDogs from './screens/AllDogs';
+import OneDog from './screens/OneDog';
+import NewDog from './screens/NewDog';
+import Page404 from './screens/Page404';
 import {DogProvider} from './utils/data';
 
 function App() {

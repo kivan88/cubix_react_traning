@@ -1,24 +1,25 @@
-import { useNavigate } from 'react-router-dom';
-import { useState} from 'react';
+import { useParams,useNavigate } from 'react-router-dom';
+import { useEffect, useState} from 'react';
 import { Button, Container, Grid, Paper, TextField, Typography } from '@mui/material';
-import {useDogContext} from './utils/data';
+import {useDogContext} from '../utils/data';
 
-function NewDog() {
+function OneDog() {
   const navigate = useNavigate();
-  const {addDog} = useDogContext();
+  const {id} = useParams();
+  const {dogs, updateDog, getDogById} = useDogContext();
   const [image, setImage] = useState();
   const [name, setName] = useState();
 
-  const generateUUID = () => {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-  }
+  useEffect(() => {
+    const dog = getDogById(id);
+    if (dog) {
+      setImage(dog.image);
+      setName(dog.name);
+    }
+  }, [id, dogs, getDogById]);
 
   const handleSave = () => {
-    addDog({id: generateUUID(),
+    updateDog({id: id,
       name: name,
       image: image
     });
@@ -30,7 +31,7 @@ function NewDog() {
       <Paper style={{ padding: "16px"}}>
         <Grid container spacing={2}>
           <Grid item xs={12}> 
-            <Typography variant={'h4'}>{"Add new dog"}</Typography>
+            <Typography variant={'h4'}>{name}</Typography>
           </Grid>  
           <Grid item xs={12} md={6}>    
             <TextField 
@@ -57,4 +58,4 @@ function NewDog() {
   );
 }
 
-export default NewDog;
+export default OneDog;

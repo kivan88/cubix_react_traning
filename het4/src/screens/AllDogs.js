@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import DogCard from './DogCard';
-import AddDogCard from './AddDogCard';
+import DogCard from '../components/DogCard';
+import AddDogCard from '../components/AddDogCard';
 import { Container, Grid, Typography } from '@mui/material';
-import {useDogContext} from './utils/data';
+import {useDogContext} from '../utils/data';
 
 function AllDogs() {
   const navigate = useNavigate();
