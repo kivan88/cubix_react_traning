@@ -43,11 +43,9 @@ function validateUserName(value) {
 };
 
 function validateEmail(value) {
-    let errorMessage;
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-        errorMessage = 'Érvénytelen e-mail cím';
+        return 'Érvénytelen e-mail cím';
     }
-    return errorMessage;
 };
 
 export default function Screen1() {
