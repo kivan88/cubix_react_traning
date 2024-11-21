@@ -1,0 +1,11 @@
+.Login {
+    max-width: 400px;
+}
+.EditWallet {
+    max-width: 800px;
+}
+.Login-forgotten {
+    text-align: right;
+    justify-content: right;
+    max-width: 400px;
+}
