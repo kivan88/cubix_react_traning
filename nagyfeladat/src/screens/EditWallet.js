@@ -1,8 +1,7 @@
-import { Button, Container, Grid, Typography} from '@mui/material';
+import { Container, Grid, Typography} from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 import React from 'react';
-import ButtonAppBar from '../components/AppBar';
 import '../css/Wallet.css';
 import MultipleSelectChip from '../components/MultipleSelectChip';
 import SubmitButton from '../components/SubmitButton';
@@ -10,10 +9,8 @@ import {useNavigate} from 'react-router-dom';
 
 export default function EditWallet() {
     const navigate = useNavigate();
-    const authenticated = true;
 
     return (<Container maxWidth={'xl'}>
-        <ButtonAppBar authenticated={authenticated}/>
         <Typography variant={"h3"} padding={2}>{'Name - edit'}</Typography>
         <Typography variant={"body1"} padding={2}>{'Owner: user'}</Typography>
         <Grid container spacing={2} padding={2} className='EditWallet'>

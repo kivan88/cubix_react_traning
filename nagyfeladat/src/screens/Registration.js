@@ -1,14 +1,12 @@
-import { Button, Container, Grid, Typography} from '@mui/material';
+import { Container, Grid, Typography} from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import { CheckboxWithLabel, TextField } from 'formik-mui';
 import React from 'react';
-import ButtonAppBar from '../components/AppBar';
 import '../css/Wallet.css';
 import SubmitButton from '../components/SubmitButton';
 
 export default function Registration() {
     return (<Container maxWidth={'xl'}>
-        <ButtonAppBar />
         <Typography variant={"h3"} align='center' padding={2}>{'Registration'}</Typography>
         <Grid container spacing={2} padding={2}>
             <Grid item xs={12} className="centerMyForm">

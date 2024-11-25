@@ -1,12 +1,10 @@
 import { Button, Container, Grid, IconButton, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography} from '@mui/material';
 import React from 'react';
-import ButtonAppBar from '../components/AppBar';
 import '../css/Wallet.css';
 import {DeleteOutline} from '@mui/icons-material';
 
 export default function WalletTransactions() {
     return (<Container maxWidth={'xl'}>
-        <ButtonAppBar />
         <Typography variant={"h3"} padding={2}>{'Name - transactions'}</Typography>
         <Grid container spacing={2} padding={2}>
             <Grid item xs={12}>

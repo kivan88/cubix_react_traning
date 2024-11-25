@@ -1,6 +1,5 @@
 import { Container, Grid, IconButton, Typography} from '@mui/material';
 import React from 'react';
-import ButtonAppBar from '../components/AppBar';
 import '../css/Wallet.css';
 import WalletBox from '../components/WalletBox';
 import {AddBox} from '@mui/icons-material';
@@ -10,11 +9,10 @@ export default function Screen2() {
     const navigate = useNavigate();
 
     return (<Container maxWidth={'xl'}>
-        <ButtonAppBar />
         <Typography variant={"h4"} padding={2}>{'My wallets'}</Typography>
         <Grid container spacing={2} padding={2}>
-            <WalletBox/>
-            <WalletBox/>
+            <WalletBox shared={false}/>
+            <WalletBox shared={false}/>
             <Grid item xs={12} sm={6} md={4} lg={3}>
                 <IconButton aria-label="Add" onClick={()=>{
                         navigate('/me/wallet/new');
@@ -25,8 +23,8 @@ export default function Screen2() {
         </Grid>
         <Typography variant={"h4"} padding={2}>{'Shared wallets'}</Typography>
         <Grid container spacing={2} padding={2}>
-            <WalletBox/>
-            <WalletBox/>
+            <WalletBox shared={true}/>
+            <WalletBox shared={true}/>
         </Grid>
     </Container>)
 }

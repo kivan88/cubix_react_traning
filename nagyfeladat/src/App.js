@@ -5,12 +5,14 @@ import WalletTransactions from './screens/WalletTransactions';
 import EditWallet from './screens/EditWallet';
 import Page404 from './screens/Page404';
 import Landing from './screens/Landing';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Providers from './Providers';
+import ButtonAppBar from './components/AppBar';
 
 function App() {
   return (
     <Providers>
+      <ButtonAppBar/>
       <Routes>
         <Route path="/" exact element={<Landing/>} />
         <Route path="/me" element={<WalletLists/>} />

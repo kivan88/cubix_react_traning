@@ -1,9 +1,15 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
+import { AuthContextProvider } from './hooks/useAuth';
+import { ModalContextProvider } from './hooks/useModals';
 
 export default function Providers({children}) {
     return (
-        <BrowserRouter>
-            {children}
-        </BrowserRouter>
+        <AuthContextProvider>
+            <ModalContextProvider>
+                <BrowserRouter>
+                    {children}
+                </BrowserRouter>
+            </ModalContextProvider>
+        </AuthContextProvider>
     )
 }
