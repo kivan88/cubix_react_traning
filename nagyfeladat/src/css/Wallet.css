@@ -9,3 +9,7 @@
     justify-content: right;
     max-width: 400px;
 }
+.centerMyForm {
+    justify-content: center;
+    align-items: center;
+}

@@ -2,12 +2,12 @@ import { Button, Container, Grid, Typography} from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 import React from 'react';
-import ButtonAppBar from './AppBar';
-import './Wallet.css';
+import ButtonAppBar from '../components/AppBar';
+import '../css/Wallet.css';
 
-export default function Screen1() {
+export default function Landing() {
     return (<Container maxWidth={'xl'}>
-        <ButtonAppBar />
+        <ButtonAppBar authToken={false} />
         <Typography variant={"h1"} align='center' padding={2}>{'Wallet'}</Typography>
         <Typography variant={"body2"} align='center'>{'The Wallet application is a digital platform that allows users to create and manage multiple wallets for organizing their finances. Users can securely store transaction records and track spending within each wallet. The app enables seamless sharing of wallets with other registered users, making it ideal for collaborative financial planning or group projects. With robust security features, it ensures the protection of sensitive financial data. Its intuitive interface and real-time updates make it a convenient tool for both personal and shared financial management.'}</Typography>
         <Grid container spacing={2} padding={2} className='Login'>

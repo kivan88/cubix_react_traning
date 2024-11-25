@@ -2,13 +2,18 @@ import { Button, Container, Grid, Typography} from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 import React from 'react';
-import ButtonAppBar from './AppBar';
-import './Wallet.css';
-import MultipleSelectChip from './components/MultipleSelectChip';
+import ButtonAppBar from '../components/AppBar';
+import '../css/Wallet.css';
+import MultipleSelectChip from '../components/MultipleSelectChip';
+import SubmitButton from '../components/SubmitButton';
+import {useNavigate} from 'react-router-dom';
 
-export default function Screen4() {
+export default function EditWallet() {
+    const navigate = useNavigate();
+    const authenticated = true;
+
     return (<Container maxWidth={'xl'}>
-        <ButtonAppBar />
+        <ButtonAppBar authenticated={authenticated}/>
         <Typography variant={"h3"} padding={2}>{'Name - edit'}</Typography>
         <Typography variant={"body1"} padding={2}>{'Owner: user'}</Typography>
         <Grid container spacing={2} padding={2} className='EditWallet'>
@@ -32,7 +37,9 @@ export default function Screen4() {
                                 <MultipleSelectChip name="sharedWith"/>
                             </Grid>
                             <Grid item xs={12}>
-                                <Button type="submit" color="primary" variant={"contained"} fullWidth>Save</Button>
+                                <Field component={SubmitButton} onClick={()=>{
+                                    navigate(`/me`);
+                                }} label={"Save"}/>
                             </Grid>
                         </Grid>
                     </Form>
