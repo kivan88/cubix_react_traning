@@ -5,6 +5,7 @@ import React from 'react';
 import '../css/Wallet.css';
 import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../hooks/useAuth';
+import { AXIOS_METHOD, doApiCall } from '../hooks/useApi';
 
 export default function Landing() {
     const navigate = useNavigate();
@@ -15,32 +16,27 @@ export default function Landing() {
         <Typography variant={"body2"} align='center'>{'The Wallet application is a digital platform that allows users to create and manage multiple wallets for organizing their finances. Users can securely store transaction records and track spending within each wallet. The app enables seamless sharing of wallets with other registered users, making it ideal for collaborative financial planning or group projects. With robust security features, it ensures the protection of sensitive financial data. Its intuitive interface and real-time updates make it a convenient tool for both personal and shared financial management.'}</Typography>
         <Grid container spacing={2} padding={2} className='Login'>
             <Grid item xs={12}>
-                <Formik initialValues={{username: "", password: ""}} validate={""} onSubmit={(values, formik)=>{
+                <Formik initialValues={{name: "", password: ""}} validate={""} onSubmit={(values, formik)=>{
                     formik.setSubmitting(true);
-                    setTimeout(()=>{
-                        console.log(values);
+                    doApiCall(AXIOS_METHOD.POST, '/login', (data)=>{
+                        handleLoginResult(data);
+                        navigate('/me');
+                    }, (apiError)=>{
+                        formik.setFieldError('name', apiError);
                         formik.setSubmitting(false);
-                    }, 3000);
+                    }, values);
                 }}>
                     <Form className='Login'>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Field name="username" type="text" required validate={""} component={TextField} label={"Username"} variant="outlined" fullWidth/>
+                                <Field name="name" type="text" required validate={""} component={TextField} label={"Username"} variant="outlined" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
                                 <Field name="password" type="password" required validate={""} component={TextField} label={"Password"} variant="outlined" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
-                                <Button type="submit" color="primary" variant={"contained"} onClick={()=>{   
-                                    handleLoginResult({
-                                        "token": "ads",
-                                        "user": {
-                                        "id": 1,
-                                        "name": "Laco"
-                                        }
-                                    });
-                                    navigate('/me');
-                                }} fullWidth>Login</Button>
+                                <Button type="submit" color="primary" variant={"contained"} 
+                                fullWidth>Login</Button>
                             </Grid>
                         </Grid>
                     </Form>

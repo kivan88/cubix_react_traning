@@ -6,9 +6,12 @@ import '../css/Wallet.css';
 import MultipleSelectChip from '../components/MultipleSelectChip';
 import SubmitButton from '../components/SubmitButton';
 import {useNavigate} from 'react-router-dom';
+// import {useAuth} from '../hooks/useAuth';
+import { AXIOS_METHOD, doApiCall } from '../hooks/useApi';
 
 export default function EditWallet() {
     const navigate = useNavigate();
+    // const {user} = useAuth();
 
     return (<Container maxWidth={'xl'}>
         <Typography variant={"h3"} padding={2}>{'Name - edit'}</Typography>
@@ -17,10 +20,13 @@ export default function EditWallet() {
             <Grid item xs={12}>
                 <Formik initialValues={{name: "", description: "", sharedWith: [], createdby: ""}} validate={""} onSubmit={(values, formik)=>{
                     formik.setSubmitting(true);
-                    setTimeout(()=>{
-                        console.log(values);
+                    doApiCall(AXIOS_METHOD.PUT, '/wallet', (_unusedNewWallet)=>{
                         formik.setSubmitting(false);
-                    }, 3000);
+                        navigate('/me');
+                    }, (apiError)=>{
+                        formik.setFieldError('name', apiError);
+                        formik.setSubmitting(false);
+                    }, values);
                 }}>
                     <Form>
                         <Grid container spacing={2}>

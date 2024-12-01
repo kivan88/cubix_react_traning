@@ -5,9 +5,19 @@ import WalletTransactions from './screens/WalletTransactions';
 import EditWallet from './screens/EditWallet';
 import Page404 from './screens/Page404';
 import Landing from './screens/Landing';
-import {Routes, Route} from 'react-router-dom';
+import {Navigate,Routes, Route} from 'react-router-dom';
 import Providers from './Providers';
 import ButtonAppBar from './components/AppBar';
+import {useAuth} from './hooks/useAuth';
+
+function ProtectedPage({children}) {
+  const {authToken} = useAuth();
+  if (authToken === false) {
+    return <Navigate to="/"/>;
+  }
+
+  return children;
+}
 
 function App() {
   return (
@@ -15,10 +25,10 @@ function App() {
       <ButtonAppBar/>
       <Routes>
         <Route path="/" exact element={<Landing/>} />
-        <Route path="/me" element={<WalletLists/>} />
-        <Route path="/me/wallet/:id" element={<WalletTransactions/>} />
-        <Route path="/me/wallet/:id/edit" element={<EditWallet/>} />
-        <Route path="/me/wallet/new" element={<EditWallet/>} />
+        <Route path="/me" element={<ProtectedPage><WalletLists/></ProtectedPage>} />
+        <Route path="/me/wallet/:id" element={<ProtectedPage><WalletTransactions/></ProtectedPage>} />
+        <Route path="/me/wallet/:id/edit" element={<ProtectedPage><EditWallet/></ProtectedPage>} />
+        <Route path="/me/wallet/new" element={<ProtectedPage><EditWallet/></ProtectedPage>} />
         <Route path="/registration" element={<Registration/>} />
         <Route path="*" exact element={<Page404/>} />
       </Routes>

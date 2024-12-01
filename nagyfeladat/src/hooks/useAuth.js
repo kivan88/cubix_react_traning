@@ -1,17 +1,19 @@
 import React, {useCallback, useContext, useState} from 'react';
+import { setApiToken } from '../hooks/useApi';
 
 const AuthContext = React.createContext();
 AuthContext.displayName = 'AuthContext';
 
 export function AuthContextProvider({children}) {
     const [authToken, setAuthToken] = useState(false);
-    const [user, setUser] = useState({});
+    const [sessionUser, setSessionUser] = useState({});
 
     const handleLoginResult = useCallback(
         (loginResult) => {
+        setApiToken(loginResult.token);
         setAuthToken(loginResult.token);
-        setUser(loginResult.user);
-    }, [setAuthToken, setUser]);
+        setSessionUser(loginResult.user);
+    }, [setAuthToken, setSessionUser]);
 
     // useEffect(() => {
     //     const user = localStorage.getItem('user');
@@ -26,7 +28,7 @@ export function AuthContextProvider({children}) {
     }, [handleLoginResult]);
 
     return (
-        <AuthContext.Provider value={{authToken, user, handleLoginResult, logout}}>
+        <AuthContext.Provider value={{authToken, user: sessionUser, handleLoginResult, logout}}>
             {children}
         </AuthContext.Provider>
     )
