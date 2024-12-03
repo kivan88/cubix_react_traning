@@ -3,7 +3,7 @@ import {DeleteOutline, EditOutlined} from '@mui/icons-material';
 import {useNavigate} from 'react-router-dom';
 import {useModals, MODALS} from '../hooks/useModals';
 
-function WalletBox({id, name, description, shared}) {
+function WalletBox({id, name, description, shared, onDelete}) {
   const navigate = useNavigate();
   const {showModal} = useModals();
 
@@ -26,6 +26,7 @@ function WalletBox({id, name, description, shared}) {
                 </IconButton>
                 <IconButton aria-label="Delete" onClick={()=>{
                     showModal(MODALS.CONFIRM_DELETE);
+                    onDelete(id);
                   }}>
                   <DeleteOutline />
                 </IconButton>
