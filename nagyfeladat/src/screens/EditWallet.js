@@ -13,6 +13,7 @@ import ErrorBlock from '../components/ErrorBlock';
 export default function EditWallet() {
     const navigate = useNavigate();
     const {id} = useParams();
+        
     const [wallet, loading, error] = useApi(AXIOS_METHOD.GET, `/wallet/${id}`);
 
     const userData = {

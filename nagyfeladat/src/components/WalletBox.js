@@ -1,11 +1,9 @@
 import {Button, Card, CardContent, CardActions, Grid, IconButton, Typography} from '@mui/material';
 import {DeleteOutline, EditOutlined} from '@mui/icons-material';
 import {useNavigate} from 'react-router-dom';
-import {useModals, MODALS} from '../hooks/useModals';
 
 function WalletBox({id, name, description, shared, onDelete}) {
   const navigate = useNavigate();
-  const {showModal} = useModals();
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -24,12 +22,9 @@ function WalletBox({id, name, description, shared, onDelete}) {
                   }}>
                   <EditOutlined />
                 </IconButton>
-                <IconButton aria-label="Delete" onClick={()=>{
-                    showModal(MODALS.CONFIRM_DELETE);
-                    onDelete(id);
-                  }}>
+                {onDelete && <IconButton aria-label="Delete" onClick={()=>onDelete}>
                   <DeleteOutline />
-                </IconButton>
+                </IconButton>}
                 </>)}
             </CardActions>
         </Card>

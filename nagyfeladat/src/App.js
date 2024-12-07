@@ -3,6 +3,7 @@ import Registration from './screens/Registration';
 import WalletLists from './screens/WalletLists';
 import WalletTransactions from './screens/WalletTransactions';
 import EditWallet from './screens/EditWallet';
+import NewWallet from './screens/NewWallet';
 import Page404 from './screens/Page404';
 import Landing from './screens/Landing';
 import {Navigate,Routes, Route} from 'react-router-dom';
@@ -28,7 +29,7 @@ function App() {
         <Route path="/me" element={<ProtectedPage><WalletLists/></ProtectedPage>} />
         <Route path="/me/wallet/:id" element={<ProtectedPage><WalletTransactions/></ProtectedPage>} />
         <Route path="/me/wallet/:id/edit" element={<ProtectedPage><EditWallet/></ProtectedPage>} />
-        <Route path="/me/wallet/new" element={<ProtectedPage><EditWallet/></ProtectedPage>} />
+        <Route path="/me/wallet/new" element={<ProtectedPage><NewWallet/></ProtectedPage>} />
         <Route path="/registration" element={<Registration/>} />
         <Route path="*" exact element={<Page404/>} />
       </Routes>

@@ -1,12 +1,14 @@
 import React, {useCallback, useContext, useState} from 'react';
 import ConfirmationModal from '../components/ConfirmationModal';
+import TransactionModal from '../components/TransactionModal';
 
 const ModalContext = React.createContext();
 ModalContext.displayName = 'ModalContext';
 
 export const MODALS = {
     'NONE': 'NONE',
-    'CONFIRM_DELETE': 'CONFIRM_DELETE'
+    'CONFIRM': 'CONFIRM',
+    'TRANSACTION': 'TRANSACTION'
 };
 
 export function Modals() {
@@ -15,8 +17,10 @@ export function Modals() {
             {(context) => {
                 const onClose = () => context.showModal(MODALS.NONE);
                 switch (context.currentModal){
-                    case MODALS.CONFIRM_DELETE:
-                        return <ConfirmationModal onClose={onClose}/>
+                    case MODALS.CONFIRM:
+                        return <ConfirmationModal onClose={onClose} {...context.modalProps} />
+                    case MODALS.TRANSACTION:
+                        return <TransactionModal onClose={onClose} {...context.modalProps} />
                     case MODALS.NONE:
                     default:
                         return null;
@@ -28,14 +32,17 @@ export function Modals() {
 
 export function ModalContextProvider({children}) {
     const [currentModal, setCurrentModal] = useState(false);
-
+    const [modalProps, setModalProps] = useState({});
     const showModal = useCallback(
-        (newModal) => {
+        (newModal, newModalProps = {}) => {
+            setModalProps(newModalProps);
             setCurrentModal(newModal);
-        }, [setCurrentModal]);
+        },
+        [setCurrentModal, setModalProps]
+    );
 
     return (
-        <ModalContext.Provider value={{currentModal, showModal}}>
+        <ModalContext.Provider value={{currentModal, showModal, modalProps}}>
             {children}
             <Modals/>
         </ModalContext.Provider>

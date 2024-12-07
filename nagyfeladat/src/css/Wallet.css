@@ -1,6 +1,3 @@
-.Login {
-    max-width: 400px;
-}
 .EditWallet {
     max-width: 800px;
 }
@@ -8,8 +5,4 @@
     text-align: right;
     justify-content: right;
     max-width: 400px;
-}
-.centerMyForm {
-    justify-content: center;
-    align-items: center;
 }
