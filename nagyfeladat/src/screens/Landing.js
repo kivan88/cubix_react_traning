@@ -6,14 +6,17 @@ import '../css/Wallet.css';
 import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../hooks/useAuth';
 import { AXIOS_METHOD, doApiCall } from '../hooks/useApi';
+import { useModals, MODALS } from '../hooks/useModals';
 
 export default function Landing() {
     const navigate = useNavigate();
     const {handleLoginResult} = useAuth();
+    const {showModal} = useModals();
     const handleRegistrationOnClick = () => {
         navigate('/registration');
     }
     const handleForgottenOnClick = () => {
+        showModal(MODALS.MESSAGE, {message: 'Email would have been sent with new password if there were email address.', tilte: 'Email sent'});
     }
 
     return (<Container maxWidth={'xl'}>

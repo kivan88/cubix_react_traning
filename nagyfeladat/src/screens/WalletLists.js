@@ -1,34 +1,43 @@
 import { Container, Grid, IconButton, Typography} from '@mui/material';
-// import { useEffect, useState } from 'react';
 import '../css/Wallet.css';
 import WalletBox from '../components/WalletBox';
 import {AddBox} from '@mui/icons-material';
 import {useNavigate} from 'react-router-dom';
-import useApi, { doApiCall, AXIOS_METHOD } from '../hooks/useApi';
+import { doApiCall, AXIOS_METHOD } from '../hooks/useApi';
 import {useAuth} from '../hooks/useAuth';
 import LoadingBlock from '../components/LoadingBlock';
 import ErrorBlock from '../components/ErrorBlock';
 import { useModals, MODALS } from '../hooks/useModals';
+import useWallets from '../hooks/useWallets';
 
 export default function WalletList() {
     const navigate = useNavigate();
     const {user} = useAuth();
-    const [walletList, loading, error] = useApi(AXIOS_METHOD.GET, '/wallets');
     const {showModal} = useModals();
+    const [walletList, loading, error, resetWalletList] = useWallets();
     
-    function onDelete(id) {
+    const onDelete = (id) => {
         showModal(MODALS.CONFIRM, {
-            message: "Are you sure you want to delete this wallet?",
-            onConfirmed: () => {
-                doApiCall(AXIOS_METHOD.DELETE, `/wallet/${id}`, (_unusedDeletedItem) => {
-                    // refreshWallets({
-                    //     "author": sessionUser?.id,
-                    //     "limit": 5,
-                    //     "cursor": ""
-                    // });
-                }, (message) => {
+            message: "Are you sure you want to delete this wallet and it's transactions?",
+            onConfirm: () => {
+                doApiCall(AXIOS_METHOD.DELETE, `/wallet/${id}`, (_unusedDeletedItem) => resetWalletList(), 
+                (message) => {
                     showModal(MODALS.ERROR, {message});
                 }, {id});
+            }
+        })
+    }
+
+    const onDeleteShared = (id) => {
+        showModal(MODALS.CONFIRM, {
+            message: "Are you sure to remove your access from this wallet?",
+            onConfirm: () => {
+                doApiCall(AXIOS_METHOD.POST, `/wallet/${id}/remove_access`, (_unusedDeletedItem) => resetWalletList(), 
+                (message) => {
+                    showModal(MODALS.ERROR, {message, Error: "Error"});
+                }, {
+                    user_id: user.id,
+                });
             }
         })
     }
@@ -50,11 +59,9 @@ export default function WalletList() {
     return (<Container maxWidth={'xl'}>
         <Typography variant={"h4"} padding={2}>{'My wallets'}</Typography>
         <Grid container spacing={2} padding={2}>
-            {walletList.map(wallet => {
-                console.log(wallet);
-                if (myWallet(wallet))
-                    return (<WalletBox key={wallet.id} shared={!myWallet(wallet)} {...wallet} onDelete={onDelete(wallet.id)}/>);
-                return null;
+            {loading === false && walletList && walletList.map(wallet => { if (myWallet(wallet)) {
+                return (<WalletBox key={wallet.id} {...wallet} shared={!myWallet(wallet)} onDelete={() => onDelete(wallet?.id)}/>);
+            } return null;
             })}
             <Grid item xs={12} sm={6} md={4} lg={3}>
                 <IconButton aria-label="Add" onClick={()=>{
@@ -66,10 +73,9 @@ export default function WalletList() {
         </Grid>
         <Typography variant={"h4"} padding={2}>{'Shared wallets'}</Typography>
         <Grid container spacing={2} padding={2}>
-            {walletList.map(wallet => {
-                if (!myWallet(wallet))
-                    return (<WalletBox key={wallet.id} shared={!myWallet(wallet)} {...wallet}/>);
-                return null;
+            {loading === false && walletList && walletList.map(wallet => { if (!myWallet(wallet)) {
+                    return (<WalletBox key={wallet.id} shared={!myWallet(wallet)} {...wallet} onDelete={() => onDeleteShared(wallet?.id)}/>);
+                } return null;
             })}
         </Grid>
     </Container>)

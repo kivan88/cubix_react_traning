@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useCallback, useState, useEffect} from 'react';
 import axios from 'axios';
 
 const BASE_URL = 'https://proud-mode-ea75.karancsivan88.workers.dev';
@@ -34,32 +34,31 @@ export function doApiCall(method, uri, onSuccess, onFailure = false, data = unde
     });
 }
 
-export function useApi(method, uri, data, deps = []) {
+export function useApi(method, uri, postData = undefined, deps = []) {
+    const [data, setData] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [responseData, setResponseData] = useState(false);
     const [error, setError] = useState(false);
 
-    useEffect(() => {
+    const apiCallCallback = useCallback((apiPostData) => {
         setLoading(true);
-        const controller = new AbortController();
-        doApiCall(method, uri, (data)=>{
-            setResponseData(data);
+        doApiCall(method, uri, (responseData) => {
+            setData(responseData);
             setError(false);
             setLoading(false);
-        }, (apiError)=>{
-            setResponseData(false);
-            setError(apiError);
+        }, (errorMessage) => {
+            console.log(errorMessage);
+            setError(errorMessage);
+            setData(false);
             setLoading(false);
-            console.log(apiError);
-        }, data);
+        }, apiPostData);
+    }, [method, setData, setError, setLoading, uri]);
 
-        return () => {
-            controller.abort();
-        }
-    // eslint-disable-next-line 
-    }, [uri, JSON.stringify(data), method, ...deps]);
+    useEffect(() => {
+        apiCallCallback(postData);
+    // eslint-disable-next-line
+    }, [apiCallCallback, JSON.stringify(postData), ...deps]);
 
-  return [responseData, loading, error];
+    return [data, loading, error, apiCallCallback];
 }
 
 export default useApi;

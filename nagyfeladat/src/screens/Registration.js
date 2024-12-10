@@ -6,11 +6,13 @@ import '../css/Wallet.css';
 import SubmitButton from '../components/SubmitButton';
 import { AXIOS_METHOD, doApiCall } from '../hooks/useApi';
 import {useNavigate} from 'react-router-dom';
-import {useAuth} from '../hooks/useAuth';
+// import {useAuth} from '../hooks/useAuth';
+import { useModals, MODALS } from '../hooks/useModals';
 
 export default function Registration() {
     const navigate = useNavigate();
-    const {handleLoginResult} = useAuth();
+    // const {handleLoginResult} = useAuth();
+    const {showModal } = useModals();
 
     function validateRegFormValues(values) {
         const errors = {};
@@ -52,11 +54,13 @@ export default function Registration() {
                     };
 
                     doApiCall(AXIOS_METHOD.POST, '/reg', (_unusedRegData)=>{
-                        doApiCall(AXIOS_METHOD.POST, '/login', (data)=>{
-                            handleLoginResult(data);
-                            formik.setSubmitting(false);
-                            navigate('/me');
-                        }, onFailure, values);
+                        // doApiCall(AXIOS_METHOD.POST, '/login', (data)=>{
+                        //     handleLoginResult(data);
+                        //     formik.setSubmitting(false);
+                        //     navigate('/me');
+                        // }, onFailure, values);
+                        showModal(MODALS.MESSAGE, {message: 'Registration successful!', tilte: 'Success'});
+                        navigate('/');
                     }, onFailure, values);
                 }}>
                     <Form>

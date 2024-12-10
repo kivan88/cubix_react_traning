@@ -4,28 +4,38 @@ import {TextField} from 'formik-mui'
 import SubmitButton from "../components/SubmitButton";
 import {AXIOS_METHOD, doApiCall} from "../hooks/useApi";
 
-export default function TransactionModal({onClose}) {
+function validateTitle(title) {
+    if (title.length < 3) {
+        return 'Description should be at least 3 characters!';
+    }
+}
+
+export default function TransactionModal({onClose, id}) {
     return (<Dialog open={true} onClose={onClose}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
             <br/>
-            <Formik initialValues={{}} onSubmit={(value, {setFieldError, setSubmitting}) => {
+            <Formik initialValues={{title: "", amount: 0}} onSubmit={(value, {setFieldError, setSubmitting}) => {
                 setSubmitting(true);
-                doApiCall(AXIOS_METHOD.POST, '/transactions', () => {
+                doApiCall(AXIOS_METHOD.PUT, '/transactions', () => {
                     setSubmitting(false);
                     onClose();
                 }, (apiError) => {
                     setFieldError('title', apiError);
                     setSubmitting(false);
-                }, value);
+                }, {
+                    wallet_id: id,
+                    title: value.title,
+                    amount: value.amount
+                });
             }}>
                 <Form>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Field component={TextField} name="title" label="Description" type="text" fullWidth/>
+                            <Field component={TextField} name="title" label="Description" type="text" validate={validateTitle} required fullWidth/>
                         </Grid>
                         <Grid item xs={12}>
-                            <Field component={TextField} name="amount" label="Amount" type="number" fullWidth/>
+                            <Field component={TextField} name="amount" label="Amount" type="number" required fullWidth/>
                         </Grid>
                         <Grid item xs={12}>
                             <Field component={SubmitButton} label={"Add transaction"}/>

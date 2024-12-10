@@ -16,16 +16,14 @@ function WalletBox({id, name, description, shared, onDelete}) {
                 <Button variant={"contained"} onClick={()=>{
                     navigate(`/me/wallet/${id}`);
                   }} fullWidth>Details</Button>
-                {shared===false && (<>
-                <IconButton aria-label="Edit" onClick={()=>{
+                {shared===false && <IconButton aria-label="Edit" onClick={()=>{
                     navigate(`/me/wallet/${id}/edit`);
                   }}>
                   <EditOutlined />
-                </IconButton>
-                {onDelete && <IconButton aria-label="Delete" onClick={()=>onDelete}>
+                </IconButton>}
+                {onDelete && <IconButton aria-label="Delete" onClick={onDelete}>
                   <DeleteOutline />
                 </IconButton>}
-                </>)}
             </CardActions>
         </Card>
     </Grid>

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -7,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import { useState } from 'react';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,19 +19,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight: personName.includes(name)
@@ -40,9 +27,15 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChip() {
+export default function MultipleSelectChip({users, selectedUsers, onSelectionChange }) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+
+  let selectedUserList = [];
+  selectedUsers.map((user) => selectedUserList.push(user.name));
+
+  const [personName, setPersonName] = useState(selectedUserList);
+  // const {user} = useAuth();
+
 
   const handleChange = (event) => {
     const {
@@ -52,6 +45,7 @@ export default function MultipleSelectChip() {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
+    onSelectionChange(value);
   };
 
   return (
@@ -74,13 +68,13 @@ export default function MultipleSelectChip() {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {users.map((user) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
+              key={user.id}
+              value={user.name}
+              style={getStyles(user.name, personName, theme)}
             >
-              {name}
+              {user.name}
             </MenuItem>
           ))}
         </Select>

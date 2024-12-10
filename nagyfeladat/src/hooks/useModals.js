@@ -1,6 +1,7 @@
 import React, {useCallback, useContext, useState} from 'react';
-import ConfirmationModal from '../components/ConfirmationModal';
-import TransactionModal from '../components/TransactionModal';
+import ConfirmationModal from '../modals/ConfirmationModal';
+import TransactionModal from '../modals/TransactionModal';
+import MessageModal from '../modals/MessageModal';
 
 const ModalContext = React.createContext();
 ModalContext.displayName = 'ModalContext';
@@ -8,7 +9,8 @@ ModalContext.displayName = 'ModalContext';
 export const MODALS = {
     'NONE': 'NONE',
     'CONFIRM': 'CONFIRM',
-    'TRANSACTION': 'TRANSACTION'
+    'TRANSACTION': 'TRANSACTION',
+    'MESSAGE': 'MESSAGE'
 };
 
 export function Modals() {
@@ -21,6 +23,8 @@ export function Modals() {
                         return <ConfirmationModal onClose={onClose} {...context.modalProps} />
                     case MODALS.TRANSACTION:
                         return <TransactionModal onClose={onClose} {...context.modalProps} />
+                    case MODALS.MESSAGE:
+                        return <MessageModal onClose={onClose} {...context.modalProps} />
                     case MODALS.NONE:
                     default:
                         return null;

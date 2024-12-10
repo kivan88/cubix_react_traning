@@ -9,8 +9,6 @@ export default function ButtonAppBar() {
   const {user, authToken, logout} = useAuth();
   const location = useLocation();
 
-  console.log(location.pathname);
-
   return (<Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
