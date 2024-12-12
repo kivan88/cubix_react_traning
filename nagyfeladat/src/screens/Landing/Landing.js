@@ -2,11 +2,11 @@ import { Button, Container, Grid, Typography} from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 import React from 'react';
-import '../css/Wallet.css';
+import '../../css/Wallet.css';
 import {useNavigate} from 'react-router-dom';
-import {useAuth} from '../hooks/useAuth';
-import { AXIOS_METHOD, doApiCall } from '../hooks/useApi';
-import { useModals, MODALS } from '../hooks/useModals';
+import {useAuth} from '../../hooks/useAuth';
+import { AXIOS_METHOD, doApiCall } from '../../hooks/useApi';
+import { useModals, MODALS } from '../../hooks/useModals';
 
 export default function Landing() {
     const navigate = useNavigate();

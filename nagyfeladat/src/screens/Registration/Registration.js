@@ -2,12 +2,12 @@ import { Container, Grid, Typography} from '@mui/material';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { CheckboxWithLabel, TextField } from 'formik-mui';
 import React from 'react';
-import '../css/Wallet.css';
-import SubmitButton from '../components/SubmitButton';
-import { AXIOS_METHOD, doApiCall } from '../hooks/useApi';
+import '../../css/Wallet.css';
+import SubmitButton from '../../components/SubmitButton';
+import { AXIOS_METHOD, doApiCall } from '../../hooks/useApi';
 import {useNavigate} from 'react-router-dom';
 // import {useAuth} from '../hooks/useAuth';
-import { useModals, MODALS } from '../hooks/useModals';
+import { useModals, MODALS } from '../../hooks/useModals';
 
 export default function Registration() {
     const navigate = useNavigate();

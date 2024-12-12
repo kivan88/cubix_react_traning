@@ -1,14 +1,14 @@
 import { Container, Grid, IconButton, Typography} from '@mui/material';
-import '../css/Wallet.css';
-import WalletBox from '../components/WalletBox';
+// import '../../css/Wallet.css';
+import WalletBox from './components/WalletBox';
 import {AddBox} from '@mui/icons-material';
 import {useNavigate} from 'react-router-dom';
-import { doApiCall, AXIOS_METHOD } from '../hooks/useApi';
-import {useAuth} from '../hooks/useAuth';
-import LoadingBlock from '../components/LoadingBlock';
-import ErrorBlock from '../components/ErrorBlock';
-import { useModals, MODALS } from '../hooks/useModals';
-import useWallets from '../hooks/useWallets';
+import { doApiCall, AXIOS_METHOD } from '../../hooks/useApi';
+import {useAuth} from '../../hooks/useAuth';
+import LoadingBlock from '../../components/LoadingBlock';
+import ErrorBlock from '../../components/ErrorBlock';
+import { useModals, MODALS } from '../../hooks/useModals';
+import useWallets from '../../hooks/useWallets';
 
 export default function WalletList() {
     const navigate = useNavigate();

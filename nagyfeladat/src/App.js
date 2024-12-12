@@ -1,11 +1,11 @@
 import './App.css';
-import Registration from './screens/Registration';
-import WalletLists from './screens/WalletLists';
-import WalletTransactions from './screens/WalletTransactions';
-import EditWallet from './screens/EditWallet';
-import NewWallet from './screens/NewWallet';
-import Page404 from './screens/Page404';
-import Landing from './screens/Landing';
+import Registration from './screens/Registration/Registration';
+import WalletLists from './screens/WalletLists/WalletLists';
+import WalletTransactions from './screens/Transactions/WalletTransactions';
+import EditWallet from './screens/Edit/EditWallet';
+import NewWallet from './screens/New/NewWallet';
+import Page404 from './screens/404/Page404';
+import Landing from './screens/Landing/Landing';
 import {Navigate,Routes, Route} from 'react-router-dom';
 import Providers from './Providers';
 import ButtonAppBar from './components/AppBar';

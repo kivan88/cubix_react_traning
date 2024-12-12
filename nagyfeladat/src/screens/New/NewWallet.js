@@ -2,11 +2,11 @@ import { Container, Grid, Typography} from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 import React from 'react';
-import '../css/Wallet.css';
-import SubmitButton from '../components/SubmitButton';
+import '../../css/Wallet.css';
+import SubmitButton from '../../components/SubmitButton';
 import { useNavigate } from 'react-router-dom';
-import { AXIOS_METHOD, doApiCall } from '../hooks/useApi';
-import {useAuth} from '../hooks/useAuth';
+import { AXIOS_METHOD, doApiCall } from '../../hooks/useApi';
+import {useAuth} from '../../hooks/useAuth';
 
 export default function NewWallet() {
     const navigate = useNavigate();

@@ -1,13 +1,13 @@
 import { Button, Container, Grid, IconButton, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography} from '@mui/material';
 import React from 'react';
-import '../css/Wallet.css';
+import '../../css/Wallet.css';
 import {DeleteOutline} from '@mui/icons-material';
-import { useModals, MODALS } from '../hooks/useModals';
-import useApi, { doApiCall, AXIOS_METHOD } from '../hooks/useApi';
-import {useAuth} from '../hooks/useAuth';
-import LoadingBlock from '../components/LoadingBlock';
-import ErrorBlock from '../components/ErrorBlock';
-import useTransactions from '../hooks/useTransactions';
+import { useModals, MODALS } from '../../hooks/useModals';
+import useApi, { doApiCall, AXIOS_METHOD } from '../../hooks/useApi';
+import {useAuth} from '../../hooks/useAuth';
+import LoadingBlock from '../../components/LoadingBlock';
+import ErrorBlock from '../../components/ErrorBlock';
+import useTransactions from '../../hooks/useTransactions';
 import { useParams } from 'react-router-dom';
 
 function formatDate(dateString) {

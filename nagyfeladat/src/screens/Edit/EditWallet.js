@@ -2,15 +2,14 @@ import { Container, Grid, Typography} from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 import React from 'react';
-import '../css/Wallet.css';
-import MultipleSelectChip from '../components/MultipleSelectChip';
-import SubmitButton from '../components/SubmitButton';
+import '../../css/Wallet.css';
+import MultipleSelectChip from './components/MultipleSelectChip';
+import SubmitButton from '../../components/SubmitButton';
 import { useNavigate, useParams } from 'react-router-dom';
-import useApi, { AXIOS_METHOD, doApiCall } from '../hooks/useApi';
-import LoadingBlock from '../components/LoadingBlock';
-import ErrorBlock from '../components/ErrorBlock';
+import useApi, { AXIOS_METHOD, doApiCall } from '../../hooks/useApi';
+import LoadingBlock from '../../components/LoadingBlock';
+import ErrorBlock from '../../components/ErrorBlock';
 import { useEffect, useState } from 'react';
-import useUsers from '../hooks/useUsers';
 
 function updateWalletShare(allUser, addedUser, removedUser, walletId, currentUserId) {
     const onSuccess = (data) => {
@@ -21,12 +20,10 @@ function updateWalletShare(allUser, addedUser, removedUser, walletId, currentUse
     }
     allUser.forEach((user) => {        
         if (addedUser.includes(user.name)) {
-            // console.log(`add user: ${user.name}`);
             return doApiCall(AXIOS_METHOD.POST, `/wallet/${walletId}/grant_access`, onSuccess, onFailure, {user_id: user.id});
         }
         if (removedUser.includes(user.name)) {
             if (user.id !== currentUserId) {
-                // console.log(`remove user: ${user.name}`);
                 return doApiCall(AXIOS_METHOD.POST, `/wallet/${walletId}/remove_access`, onSuccess, onFailure, {user_id: user.id});
             } 
         }
@@ -39,17 +36,9 @@ export default function EditWallet() {
     const [removedUsers, setRemovedUsers] = useState([]);
     const [addedUsers, setAddedUsers] = useState([]);
     const [wallet, loading, error] = useApi(AXIOS_METHOD.GET, `/wallet/${id}`);
-    // const [initialUser, setInitialUser] = useState(wallet?.access);
-
-    // const userData = {
-    //     "prefix": "",
-    //     "limit": 10,
-    //     "cursor": null
-    // };
-    // const [usersData, loadingUsers, errorUsers] = useApi(AXIOS_METHOD.POST, '/user/list', userData);
-    const [usersData, loadingUsers, errorUsers] = useUsers("", 10);
-    console.log(usersData);
-
+    const [usersData, loadingUsers, errorUsers] = useApi(AXIOS_METHOD.POST, '/user/list', {
+        "prefix": ""
+    });
     const [selectedUsers, setSelectedUsers] = useState([]); 
 
     useEffect(() => {
@@ -65,8 +54,6 @@ export default function EditWallet() {
             setRemovedUsers(removedUserNames);
         }
     }, [loading, wallet, selectedUsers, setSelectedUsers]);
-
-    // return null;
 
     if (loading === true  || loadingUsers === true) {
         return <LoadingBlock />;
@@ -91,7 +78,7 @@ export default function EditWallet() {
             <Grid item xs={12}>
                 <Formik initialValues={{description: wallet?.description}} validate={""} onSubmit={(values, formik)=>{
                         formik.setSubmitting(true);
-                        updateWalletShare(usersData, addedUsers, removedUsers, wallet?.id, wallet?.created_by?.id);
+                        updateWalletShare(usersData?.users, addedUsers, removedUsers, wallet?.id, wallet?.created_by?.id);
                         doApiCall(AXIOS_METHOD.PATCH, `/wallet/${wallet?.id}`, (_unusedResponseData)=>{
                         formik.setSubmitting(false);
                         navigate('/me');
@@ -106,7 +93,7 @@ export default function EditWallet() {
                                 <Field name="description" type="text" required validate={""} component={TextField} label={"Description"} variant="outlined" multiline minRows={5} fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
-                                <MultipleSelectChip users={usersData} selectedUsers={wallet?.access} onSelectionChange={handleSelectedUsersChange}/>
+                                <MultipleSelectChip users={usersData?.users} selectedUsers={wallet?.access} onSelectionChange={handleSelectedUsersChange}/>
                             </Grid>
                             <Grid item xs={12}>
                                 <Field component={SubmitButton} id="SubmitButton" label={"Save"}/>
