@@ -15,14 +15,6 @@ export function AuthContextProvider({children}) {
         setSessionUser(loginResult.user);
     }, [setAuthToken, setSessionUser]);
 
-    // useEffect(() => {
-    //     const user = localStorage.getItem('user');
-    //     if (user) {
-    //         setUser(JSON.parse(user));
-    //     }
-    //     setLoading(false);
-    // }, []);
-
     const logout = useCallback(() => {
         handleLoginResult({token: false, user: {}});
     }, [handleLoginResult]);

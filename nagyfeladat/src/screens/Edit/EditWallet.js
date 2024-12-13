@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 
 function updateWalletShare(allUser, addedUser, removedUser, walletId, currentUserId) {
     const onSuccess = (data) => {
-        console.log(data);
+        // console.log(data);
     }
     const onFailure = (error) => {
         console.log("error");
